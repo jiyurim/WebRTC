@@ -1,0 +1,301 @@
+@import url('https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&family=Gaegu:wght@300;400;700&display=swap');
+
+/* 기본 레이아웃 - 파스텔 카와이 감성 💕 */
+body {
+    font-family: 'Gaegu', 'Noto Sans KR', sans-serif;
+    background:
+            linear-gradient(135deg, #ffd6e8 0%, #e6d5ff 25%, #d5f0ff 50%, #ffe6f0 75%, #ffd6e8 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* 떠다니는 귀여운 요소들 */
+body::before {
+    content: '🌸 ✨ 🎀 💗 ⭐ 🦋 🌈 ☁️';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 2.5rem;
+    animation: floatingElements 20s linear infinite;
+    pointer-events: none;
+    opacity: 0.3;
+    z-index: 0;
+    letter-spacing: 3rem;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes floatingElements {
+    0% { transform: translateY(100vh) rotate(0deg); }
+    100% { transform: translateY(-100vh) rotate(360deg); }
+}
+
+/* 타이틀 */
+h1 {
+    font-family: 'Dongle', cursive;
+    font-size: 5rem;
+    font-weight: 700;
+    color: #ff9ec7;
+    text-shadow:
+            2px 2px 0px #ffd6e8,
+            4px 4px 0px #e6d5ff,
+            6px 6px 0px #d5f0ff;
+    animation: gentleBounce 2s ease-in-out infinite;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.1em;
+}
+
+h1::before {
+    content: '💕';
+    position: absolute;
+    left: -80px;
+    animation: heartBeat 1.5s ease-in-out infinite;
+}
+
+h1::after {
+    content: '💕';
+    position: absolute;
+    right: -80px;
+    animation: heartBeat 1.5s ease-in-out infinite;
+    animation-delay: 0.5s;
+}
+
+@keyframes gentleBounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+
+/* 비디오 래퍼 */
+.video-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 25px;
+    position: relative;
+    z-index: 1;
+}
+
+.video-box {
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(135deg, #ffd6e8 0%, #e6d5ff 100%);
+    border-radius: 30px;
+    box-shadow:
+            0 8px 20px rgba(255, 182, 223, 0.3),
+            0 4px 8px rgba(230, 213, 255, 0.2);
+    animation: softFloat 3s ease-in-out infinite;
+}
+
+.video-box::before {
+    content: '✨🌸✨';
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+@keyframes softFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes sparkle {
+    0%, 100% { opacity: 0.7; transform: translateX(-50%) scale(1); }
+    50% { opacity: 1; transform: translateX(-50%) scale(1.1); }
+}
+
+.video-box h3 {
+    font-family: 'Dongle', cursive;
+    color: #ff9ec7;
+    font-size: 2.2rem;
+    font-weight: 700;
+    text-shadow: 2px 2px 0px #ffd6e8;
+    margin-bottom: 15px;
+    letter-spacing: 0.05em;
+}
+
+/* 비디오 스타일 */
+video {
+    width: 450px;
+    height: 340px;
+    background: #f5f0ff;
+    border-radius: 25px;
+    border: 8px solid #ffd6e8;
+    box-shadow:
+            0 8px 25px rgba(255, 158, 199, 0.3),
+            0 4px 12px rgba(230, 213, 255, 0.2),
+            inset 0 0 20px rgba(255, 255, 255, 0.5);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+video:hover {
+    transform: scale(1.02);
+    border-color: #ffb6df;
+    box-shadow:
+            0 12px 30px rgba(255, 158, 199, 0.4),
+            0 6px 15px rgba(230, 213, 255, 0.3);
+}
+
+/* 컨트롤 영역 */
+.controls {
+    background: linear-gradient(135deg, #ffd6e8 0%, #e6d5ff 50%, #d5f0ff 100%);
+    padding: 30px;
+    border-radius: 30px;
+    display: inline-block;
+    box-shadow:
+            0 8px 20px rgba(255, 182, 223, 0.3),
+            0 4px 10px rgba(230, 213, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.6);
+    animation: controlsGlow 3s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes controlsGlow {
+    0%, 100% { box-shadow: 0 8px 20px rgba(255, 182, 223, 0.3); }
+    50% { box-shadow: 0 8px 25px rgba(255, 182, 223, 0.5); }
+}
+
+/* 버튼 스타일 */
+button {
+    padding: 15px 35px;
+    font-size: 16px;
+    font-weight: 700;
+    font-family: 'Gaegu', sans-serif;
+    cursor: pointer;
+    border: none;
+    border-radius: 25px;
+    margin: 8px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+button:hover::before {
+    width: 250px;
+    height: 250px;
+}
+
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(-1px);
+}
+
+#startBtn {
+    background: linear-gradient(135deg, #ff9ec7, #ffb6df);
+    color: white;
+}
+
+#screenShareBtn {
+    background: linear-gradient(135deg, #c4b5fd, #ddd6fe);
+    color: white;
+}
+
+#offerBtn {
+    background: linear-gradient(135deg, #a5d8ff, #bae6fd);
+    color: white;
+}
+
+#offerBtn:disabled {
+    background: linear-gradient(135deg, #d4d4d8, #e4e4e7);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+/* 로그 영역 */
+#log-container {
+    margin-top: 30px;
+    text-align: left;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    background: linear-gradient(135deg, #f5f0ff 0%, #fef3f9 100%);
+    color: #8b5a8e;
+    padding: 20px;
+    border-radius: 25px;
+    border: 3px solid #ffd6e8;
+    font-family: 'Gaegu', monospace;
+    height: 120px;
+    overflow-y: auto;
+    box-shadow:
+            0 4px 15px rgba(255, 182, 223, 0.2),
+            inset 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* 스크롤바 커스터마이징 */
+#log-container::-webkit-scrollbar {
+    width: 10px;
+}
+
+#log-container::-webkit-scrollbar-track {
+    background: #fef3f9;
+    border-radius: 10px;
+}
+
+#log-container::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff9ec7, #c4b5fd);
+    border-radius: 10px;
+    border: 2px solid #fef3f9;
+}
+
+#log-container::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #ffb6df, #ddd6fe);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 3.5rem;
+    }
+
+    video {
+        width: 320px;
+        height: 240px;
+    }
+
+    .video-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebRTC</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>WebRTC</h1>
+
+    <div class="video-wrapper">
+        <div class="video-box">
+            <h3>ME</h3>
+            <video id="localVideo" autoplay playsinline></video>
+        </div>
+        <div class="video-box">
+            <h3>YOU</h3>
+            <video id="remoteVideo" autoplay playsinline></video>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="startBtn">카메라 & 마이크 켜기</button>
+<!--        <button id="screenShareBtn" disabled>화면 공유 시작</button>-->
+        <button id="offerBtn" disabled>상대방과 연결하기</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+    <script src="main.js"></script>
+
+</body>
+</html>

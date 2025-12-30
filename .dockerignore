@@ -1,0 +1,34 @@
+# Build artifacts
+build/
+target/
+*.jar
+*.war
+
+# Gradle
+.gradle/
+gradle-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.iws
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Documentation
+*.md
+HELP.md
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test
+test-results/
