@@ -18,6 +18,7 @@ let peerConnection;
 let stompClient;
 let mySessionId; // 내 세션 ID 저장
 let isScreenSharing = false; // 화면 공유 상태
+let iceCandidateQueue = []; // 대기 중인 ICE Candidate 저장
 
 const roomId = "room1";
 
@@ -63,7 +64,14 @@ function connectStomp() {
                     case "ice":
                         console.log("📩 ICE Candidate 수신");
                         if (peerConnection) {
-                            await peerConnection.addIceCandidate(data.candidate);
+                            // Remote description이 설정되었는지 확인
+                            if (peerConnection.remoteDescription) {
+                                await peerConnection.addIceCandidate(data.candidate);
+                            } else {
+                                // 아직 설정 안 됐으면 큐에 저장
+                                console.log("⏸️ ICE Candidate 큐에 저장");
+                                iceCandidateQueue.push(data.candidate);
+                            }
                         }
                         break;
                 }
@@ -298,6 +306,13 @@ async function handleOffer(offer) {
         new RTCSessionDescription(offer)
     );
 
+    // 큐에 저장된 ICE Candidate 추가
+    while (iceCandidateQueue.length > 0) {
+        const candidate = iceCandidateQueue.shift();
+        await peerConnection.addIceCandidate(candidate);
+        console.log("✅ 큐에서 ICE Candidate 추가");
+    }
+
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);
 
@@ -328,6 +343,13 @@ async function handleAnswer(answer) {
     await peerConnection.setRemoteDescription(
         new RTCSessionDescription(answer)
     );
+
+    // 큐에 저장된 ICE Candidate 추가
+    while (iceCandidateQueue.length > 0) {
+        const candidate = iceCandidateQueue.shift();
+        await peerConnection.addIceCandidate(candidate);
+        console.log("✅ 큐에서 ICE Candidate 추가");
+    }
 
     // 연결 완료 후 원격 비디오 재생 시도
     setTimeout(() => {
