@@ -1,26 +1,30 @@
+# Stage 1: Build
 FROM gradle:8.5-jdk17-alpine AS build
 WORKDIR /app
 
-# Gradle wrapper와 설정 파일 복사
+# Copy Gradle files
 COPY build.gradle settings.gradle ./
 COPY gradle gradle
 COPY gradlew ./
 
-# 소스 코드 복사
+# ⚠️ 이 줄 추가!
+RUN chmod +x gradlew
+
+# Copy source code
 COPY src src
 
-# 빌드 (테스트 스킵)
+# Build (skip tests)
 RUN ./gradlew build -x test --no-daemon
 
-# 실행 단계
+# Stage 2: Run
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
 
-# 빌드된 JAR 파일 복사
+# Copy JAR file
 COPY --from=build /app/build/libs/*.jar app.jar
 
-# 포트 노출
+# Expose port
 EXPOSE 8080
 
-# 실행
+# Run application
 ENTRYPOINT ["java", "-jar", "app.jar"]
