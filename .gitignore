@@ -35,3 +35,22 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Backend (Spring Boot)
+backend/build/
+backend/out/
+backend/.gradle/
+backend/bin/
+backend/target/
+backend/*.log
+
+# Frontend (React)
+frontend/node_modules/
+frontend/dist/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*

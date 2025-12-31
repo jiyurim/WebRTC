@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: 'April16thLife';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/2404-2@1.0/April16th-Life.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}
+
+body {
+    font-family: 'April16thLife';
+}
