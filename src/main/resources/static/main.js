@@ -62,8 +62,15 @@ function connectStomp() {
                         break;
 
                     case "ice":
-                        console.log("📩 ICE Candidate 수신");
                         if (peerConnection) {
+                            // Candidate 타입 로깅
+                            const candidateStr = data.candidate.candidate;
+                            let candidateType = 'unknown';
+                            if (candidateStr.includes('typ host')) candidateType = 'host';
+                            if (candidateStr.includes('typ srflx')) candidateType = 'srflx (STUN)';
+                            if (candidateStr.includes('typ relay')) candidateType = 'relay (TURN)';
+                            console.log(`📩 ICE Candidate 수신 [${candidateType}]`);
+
                             // Remote description이 설정되었는지 확인
                             if (peerConnection.remoteDescription) {
                                 await peerConnection.addIceCandidate(data.candidate);
@@ -247,7 +254,14 @@ function createPeerConnection() {
     // ICE Candidate 수집 → STOMP 전송
     peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
-            console.log("🧊 ICE Candidate:", event.candidate.type, "|", event.candidate.candidate);
+            // Candidate 타입 파싱 (host, srflx, relay)
+            const candidateStr = event.candidate.candidate;
+            let candidateType = 'unknown';
+            if (candidateStr.includes('typ host')) candidateType = 'host';
+            if (candidateStr.includes('typ srflx')) candidateType = 'srflx (STUN)';
+            if (candidateStr.includes('typ relay')) candidateType = 'relay (TURN)';
+
+            console.log(`🧊 ICE Candidate [${candidateType}]:`, event.candidate.candidate);
 
             stompClient.send(
                 "/app/signal",
@@ -258,6 +272,8 @@ function createPeerConnection() {
                     candidate: event.candidate
                 })
             );
+        } else {
+            console.log("✅ ICE Candidate 수집 완료");
         }
     };
 
@@ -270,6 +286,25 @@ function createPeerConnection() {
             remoteVideo.srcObject = event.streams[0];
             console.log("✅ 원격 스트림 설정 완료");
         }
+    };
+
+    // ICE 연결 상태 모니터링
+    peerConnection.oniceconnectionstatechange = () => {
+        console.log("🔌 ICE 연결 상태:", peerConnection.iceConnectionState);
+        if (peerConnection.iceConnectionState === 'failed') {
+            console.error("❌ ICE 연결 실패 - TURN 서버가 필요할 수 있습니다");
+        }
+        if (peerConnection.iceConnectionState === 'disconnected') {
+            console.warn("⚠️ ICE 연결 끊김");
+        }
+        if (peerConnection.iceConnectionState === 'connected' || peerConnection.iceConnectionState === 'completed') {
+            console.log("✅ ICE 연결 성공!");
+        }
+    };
+
+    // 전체 연결 상태 모니터링
+    peerConnection.onconnectionstatechange = () => {
+        console.log("🔗 전체 연결 상태:", peerConnection.connectionState);
     };
 }
 
